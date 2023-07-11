@@ -21,7 +21,7 @@ namespace NotDecided
             }
 
             Instance = this;
-
+            
             SetupColorDict();
         }
 

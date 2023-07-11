@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6443209918347337694}
   - component: {fileID: 9121478947422854923}
   - component: {fileID: 457190070501457056}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Piece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,6 +48,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 649b0fc64acd8d045afb4f3f2ecde7cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorType: 0
+  maxPullRange: 5
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!33 &644313029637443035
 MeshFilter:
   m_ObjectHideFlags: 0
