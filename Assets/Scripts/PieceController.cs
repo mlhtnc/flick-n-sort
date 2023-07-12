@@ -18,6 +18,8 @@ namespace NotDecided
 
         private Vector3 pointerDownPoint;
 
+        private bool isMoving;
+
         public bool IsPieceInCorrectPlace { get; set; }
 
         private void Start()
@@ -31,7 +33,7 @@ namespace NotDecided
 
         private void Update()
         {
-            var isMoving = rgBody.velocity.magnitude > 0f;
+            isMoving = rgBody.velocity.magnitude > 0f;
 
             if(isMoving == false)
             {
@@ -70,6 +72,9 @@ namespace NotDecided
 
         public void OnPointerUp(Vector3 pos)
         {
+            if(isMoving)
+                return;
+            
             // Make sure they are in the same plane
             var pointerUpPoint = new Vector3(pos.x, pointerDownPoint.y, pos.z);
 
