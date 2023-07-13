@@ -84,7 +84,7 @@ namespace NotDecided
 
             rgBody.AddForce(direction.normalized * magnitude * 150, ForceMode.Force);
         }
-        int i = 0;
+
         private void OnCollisionEnter(Collision collision)
         {
             var collidedPiece = collision.gameObject.GetComponent<PieceController>();
@@ -92,6 +92,8 @@ namespace NotDecided
             {
                 var particleGo = PoolManager.Spawn(GameManager.Instance.ParticlePrefab, collision.GetContact(0).point, Quaternion.identity);
                 var colParticleController = particleGo.GetComponent<CollisionParticleController>();
+
+                AudioManager.Instance.Play(GameManager.Instance.CollisionAudioClip);
 
                 colParticleController.Play(() =>
                 {

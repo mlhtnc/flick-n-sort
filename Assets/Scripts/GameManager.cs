@@ -14,9 +14,15 @@ namespace NotDecided
         [SerializeField]
         private GameObject particlePrefab;
 
+        [SerializeField]
+        private AudioClip collisionAudioClip;
+
         private Dictionary<ColorType, Color> colorDict;
 
         public GameObject ParticlePrefab => particlePrefab;
+
+
+        public AudioClip CollisionAudioClip => collisionAudioClip;
 
         private void Awake()
         {

@@ -1,31 +1,34 @@
 using System;
 using UnityEngine;
 
-public class CollisionParticleController : MonoBehaviour
+namespace NotDecided
 {
-    private Action onParticleSystemStopped;
-    private ParticleSystem particle;
-
-    private void Start()
+    public class CollisionParticleController : MonoBehaviour
     {
-        // In order to receive the callback, you must set the ParticleSystem.MainModule.stopAction property to Callback. (Unity Doc)
-        var main = GetComponent<ParticleSystem>().main;
-        main.stopAction = ParticleSystemStopAction.Callback;
+        private Action onParticleSystemStopped;
+        private ParticleSystem particle;
 
-        particle = GetComponent<ParticleSystem>();
-    }
+        private void Start()
+        {
+            // In order to receive the callback, you must set the ParticleSystem.MainModule.stopAction property to Callback. (Unity Doc)
+            var main = GetComponent<ParticleSystem>().main;
+            main.stopAction = ParticleSystemStopAction.Callback;
 
-    public void Play(Action onParticleSystemStopped = null)
-    {
-        this.onParticleSystemStopped = onParticleSystemStopped;
+            particle = GetComponent<ParticleSystem>();
+        }
 
-        this.particle = GetComponent<ParticleSystem>();
-        this.particle.Play();
-    }
+        public void Play(Action onParticleSystemStopped = null)
+        {
+            this.onParticleSystemStopped = onParticleSystemStopped;
 
-    private void OnParticleSystemStopped()
-    {
-        this.particle.Stop();
-        this.onParticleSystemStopped?.Invoke();
+            this.particle = GetComponent<ParticleSystem>();
+            this.particle.Play();
+        }
+
+        private void OnParticleSystemStopped()
+        {
+            this.particle.Stop();
+            this.onParticleSystemStopped?.Invoke();
+        }
     }
 }
