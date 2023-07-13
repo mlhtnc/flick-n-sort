@@ -11,7 +11,12 @@ namespace NotDecided
         [SerializeField]
         private ColorConfig[] colorConfigs;
 
+        [SerializeField]
+        private GameObject particlePrefab;
+
         private Dictionary<ColorType, Color> colorDict;
+
+        public GameObject ParticlePrefab => particlePrefab;
 
         private void Awake()
         {
@@ -23,15 +28,6 @@ namespace NotDecided
             Instance = this;
             
             SetupColorDict();
-        }
-
-        private void Start()
-        {
-        }
-
-        private void Update()
-        {
-            
         }
 
         private void SetupColorDict()

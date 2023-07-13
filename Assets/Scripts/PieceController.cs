@@ -1,4 +1,5 @@
 using NotDecided.InputManager;
+using NotDecided.ObjectPooling;
 using UnityEngine;
 
 namespace NotDecided
@@ -82,6 +83,21 @@ namespace NotDecided
             var magnitude = Mathf.Clamp(direction.magnitude, 0, maxPullRange);
 
             rgBody.AddForce(direction.normalized * magnitude * 150, ForceMode.Force);
+        }
+        int i = 0;
+        private void OnCollisionEnter(Collision collision)
+        {
+            var collidedPiece = collision.gameObject.GetComponent<PieceController>();
+            if(collidedPiece != null && gameObject.GetInstanceID() < collision.gameObject.GetInstanceID())
+            {
+                var particleGo = PoolManager.Spawn(GameManager.Instance.ParticlePrefab, collision.GetContact(0).point, Quaternion.identity);
+                var colParticleController = particleGo.GetComponent<CollisionParticleController>();
+
+                colParticleController.Play(() =>
+                {
+                    PoolManager.Despawn(particleGo);
+                });
+            }
         }
     }
 }
