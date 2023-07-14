@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace NotDecided
@@ -10,28 +12,84 @@ namespace NotDecided
 
         private bool isLevelCompleted;
 
+        private Dictionary<ColorType, int> totalCountByColorDict;
+
+        private Dictionary<ColorType, int> countByColorDict;
+
+        private ColorPercentageUIController colorPercentageUIController;
+
+        private List<ColorType> allColors;
+
         private void Start()
         {
-            pieceControllers = GetComponentsInChildren<PieceController>();
+            pieceControllers = GetComponentsInChildren<PieceController>(true);
+            colorPercentageUIController = GetComponent<ColorPercentageUIController>();
             levelManager = LevelManager.Instance;
+
+            CalculateTotalCountByColor();
+        }
+
+        private void CalculateTotalCountByColor()
+        {
+            totalCountByColorDict = new Dictionary<ColorType, int>();
+            countByColorDict = new Dictionary<ColorType, int>();
+            allColors = new List<ColorType>();
+
+            for(int i = 0; i < pieceControllers.Length; ++i)
+            {
+                var pieceColor = pieceControllers[i].ColorType;
+                if(totalCountByColorDict.ContainsKey(pieceColor))
+                {
+                    totalCountByColorDict[pieceColor]++;
+                }
+                else
+                {
+                    totalCountByColorDict.Add(pieceColor, 1);
+                    allColors.Add(pieceColor);
+                }
+            } 
         }
 
         private void Update()
         {
             if(isLevelCompleted)
                 return;
-            
+
+            countByColorDict.Clear();
+            for(int i = 0; i < allColors.Count; ++i)
+            {
+                if(countByColorDict.ContainsKey(allColors[i]) == false)
+                {
+                    countByColorDict[allColors[i]] = 0;
+                }
+            }
+
             int count = 0;
             for(int i = 0; i < pieceControllers.Length; ++i)
             {
                 if(pieceControllers[i].IsPieceInCorrectPlace)
+                {
                     ++count;
+
+                    var pieceColor = pieceControllers[i].ColorType;
+                    if(countByColorDict.ContainsKey(pieceColor))
+                    {
+                        countByColorDict[pieceColor]++;
+                    }
+                    else
+                    {
+                        countByColorDict.Add(pieceColor, 1);
+                    }
+                }
             }
+
+            colorPercentageUIController.UpdateColorPercentages(countByColorDict, totalCountByColorDict);
+            UIManager.Instance.UpdateLevelProgress((float) count / pieceControllers.Length);
 
             if(count == pieceControllers.Length)
             {
                 isLevelCompleted = true;
-                levelManager.OnLevelCompleted();
+                levelManager.NotifyOnLevelCompleted();
             }
         }
     }

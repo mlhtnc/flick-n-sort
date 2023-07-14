@@ -16,8 +16,8 @@ namespace NotDecided
 
         public bool IsLevelCompleted { get; private set; }
 
-        public event Action OnLevelStartedEvent;
-        public event Action OnLevelCompletedEvent;
+        public event Action OnLevelStarted;
+        public event Action OnLevelCompleted;
 
         private void Awake()
         {
@@ -46,11 +46,14 @@ namespace NotDecided
             }
         }
 
-        private void Update()
+        public void NotifyOnLevelCompleted()
         {
+            IsLevelCompleted = true;
+
+            OnLevelCompleted?.Invoke();
         }
 
-        public void OnLevelCompleted()
+        public void SetupNextLevel()
         {
             int zeroIndexedLevel = level - 1;
             if(zeroIndexedLevel + 1 == levelControllers.Length)
@@ -59,11 +62,12 @@ namespace NotDecided
             levelControllers[zeroIndexedLevel].gameObject.SetActive(false);
             levelControllers[zeroIndexedLevel + 1].gameObject.SetActive(true);
 
-            IsLevelCompleted = true;
-
             ++level;
+        }
 
-            OnLevelCompletedEvent?.Invoke();
+        public void StartNextLevel()
+        {
+            OnLevelStarted?.Invoke();
         }
     }
 }

@@ -145,9 +145,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3540672526364977234}
   - component: {fileID: 8770196520700079953}
+  - component: {fileID: 6837126564233866834}
   - component: {fileID: 7308019603068134198}
   m_Layer: 0
-  m_Name: Info
+  m_Name: ColorPercentageInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,7 +172,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 55, y: 90, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -7.93, y: 1.4}
+  m_AnchoredPosition: {x: -7.9299927, y: 1.4000244}
   m_SizeDelta: {x: -17.4872, y: -18.8427}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8770196520700079953
@@ -182,6 +183,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5586091880938755669}
   m_CullTransparentMesh: 1
+--- !u!114 &6837126564233866834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5586091880938755669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef6e37a5b53fcac4da7a85c315dfc096, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ColorType: 0
+  PercentageText: {fileID: 4594742327245651371}
 --- !u!114 &7308019603068134198
 MonoBehaviour:
   m_ObjectHideFlags: 0

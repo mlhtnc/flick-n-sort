@@ -12,17 +12,27 @@ namespace NotDecided
         private ColorConfig[] colorConfigs;
 
         [SerializeField]
-        private GameObject particlePrefab;
+        private GameObject collisionParticlePrefab;
+
+        [SerializeField]
+        private GameObject confettiParticlePrefab;
 
         [SerializeField]
         private AudioClip collisionAudioClip;
 
+        [SerializeField]
+        private AudioClip levelSuccessAudioClip;
+
         private Dictionary<ColorType, Color> colorDict;
 
-        public GameObject ParticlePrefab => particlePrefab;
+        public GameObject CollisionParticlePrefab => collisionParticlePrefab;
 
+        public GameObject ConfettiParticlePrefab => confettiParticlePrefab;
 
         public AudioClip CollisionAudioClip => collisionAudioClip;
+
+        public AudioClip LevelSuccessAudioClip => levelSuccessAudioClip;
+
 
         private void Awake()
         {

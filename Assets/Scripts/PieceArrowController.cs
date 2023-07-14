@@ -29,8 +29,8 @@ namespace NotDecided
 
             spriteGo.SetActive(false);
 
-            LevelManager.Instance.OnLevelStartedEvent += OnLevelStarted;
-            LevelManager.Instance.OnLevelCompletedEvent += OnLevelCompleted;
+            LevelManager.Instance.OnLevelStarted += OnLevelStarted;
+            LevelManager.Instance.OnLevelCompleted += OnLevelCompleted;
         }
 
         public void Show(PieceController targetPiece, Vector3 startPoint, Vector3 endPoint)

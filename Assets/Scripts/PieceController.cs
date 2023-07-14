@@ -25,6 +25,8 @@ namespace NotDecided
 
         public float MaxPullRange => maxPullRange;
 
+        public ColorType ColorType => colorType;
+
         private void Start()
         {
             var gameManager = GameManager.Instance;
@@ -37,11 +39,7 @@ namespace NotDecided
         private void Update()
         {
             isMoving = rgBody.velocity.magnitude > 0f;
-
-            if(isMoving == false)
-            {
-                IsPieceInCorrectPlace = CheckIfPieceInCorrectPlace();
-            }
+            IsPieceInCorrectPlace = CheckIfPieceInCorrectPlace();
         }
 
         private bool CheckIfPieceInCorrectPlace()
@@ -97,7 +95,7 @@ namespace NotDecided
             var direction = pointerDownPoint - pointerUpPoint;
             var magnitude = Mathf.Clamp(direction.magnitude, 0, maxPullRange);
 
-            rgBody.AddForce(direction.normalized * magnitude * 150, ForceMode.Force);
+            rgBody.AddForce(direction.normalized * magnitude * 250, ForceMode.Force);
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -105,7 +103,7 @@ namespace NotDecided
             var collidedPiece = collision.gameObject.GetComponent<PieceController>();
             if(collidedPiece != null && gameObject.GetInstanceID() < collision.gameObject.GetInstanceID())
             {
-                var particleGo = PoolManager.Spawn(GameManager.Instance.ParticlePrefab, collision.GetContact(0).point, Quaternion.identity);
+                var particleGo = PoolManager.Spawn(GameManager.Instance.CollisionParticlePrefab, collision.GetContact(0).point, Quaternion.identity);
                 var colParticleController = particleGo.GetComponent<CollisionParticleController>();
 
                 AudioManager.Instance.Play(GameManager.Instance.CollisionAudioClip);
