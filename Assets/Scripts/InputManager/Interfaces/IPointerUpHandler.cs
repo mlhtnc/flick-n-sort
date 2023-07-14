@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace NotDecided.InputManager
+namespace NotDecided.InputManagament
 {
     public interface IPointerUpHandler
     {

@@ -1,10 +1,10 @@
-using NotDecided.InputManager;
+using NotDecided.InputManagament;
 using NotDecided.ObjectPooling;
 using UnityEngine;
 
 namespace NotDecided
 {
-    public class PieceController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+    public class PieceController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerDragHandler
     {
         [SerializeField]
         private ColorType colorType;
@@ -22,6 +22,8 @@ namespace NotDecided
         private bool isMoving;
 
         public bool IsPieceInCorrectPlace { get; set; }
+
+        public float MaxPullRange => maxPullRange;
 
         private void Start()
         {
@@ -71,6 +73,14 @@ namespace NotDecided
             pointerDownPoint = pos;
         }
 
+        public void OnPointerDrag(Vector3 pos)
+        {
+            // Make sure they are in the same plane
+            pos = new Vector3(pos.x, pointerDownPoint.y, pos.z);
+
+            PieceArrowController.Instance.Show(this, pointerDownPoint, pos);
+        }
+
         public void OnPointerUp(Vector3 pos)
         {
             if(isMoving)
@@ -83,6 +93,8 @@ namespace NotDecided
             var magnitude = Mathf.Clamp(direction.magnitude, 0, maxPullRange);
 
             rgBody.AddForce(direction.normalized * magnitude * 150, ForceMode.Force);
+
+            PieceArrowController.Instance.Hide();
         }
 
         private void OnCollisionEnter(Collision collision)

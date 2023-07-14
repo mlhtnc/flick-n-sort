@@ -1,6 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using NotDecided.InputManagament;
+using System;
 
 namespace NotDecided
 {
@@ -13,6 +13,11 @@ namespace NotDecided
         private LevelController[] levelControllers;
 
         public int Level => level;
+
+        public bool IsLevelCompleted { get; private set; }
+
+        public event Action OnLevelStartedEvent;
+        public event Action OnLevelCompletedEvent;
 
         private void Awake()
         {
@@ -43,7 +48,6 @@ namespace NotDecided
 
         private void Update()
         {
-            
         }
 
         public void OnLevelCompleted()
@@ -55,7 +59,11 @@ namespace NotDecided
             levelControllers[zeroIndexedLevel].gameObject.SetActive(false);
             levelControllers[zeroIndexedLevel + 1].gameObject.SetActive(true);
 
+            IsLevelCompleted = true;
+
             ++level;
+
+            OnLevelCompletedEvent?.Invoke();
         }
     }
 }

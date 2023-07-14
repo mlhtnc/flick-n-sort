@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace NotDecided.InputManager
+namespace NotDecided.InputManagament
 {
     public class InputManager : MonoBehaviour
     {
@@ -14,6 +14,8 @@ namespace NotDecided.InputManager
         private Transform transformAlreadyPointerDowned;
 
         private bool pointerWasOnUI;
+
+        private bool isInputDisabled;
 
         private void Awake()
         {
@@ -29,6 +31,9 @@ namespace NotDecided.InputManager
 
         private void Update()
         {
+            if(isInputDisabled)
+                return;
+
             var down = Input.GetMouseButtonDown(0);
             var up = Input.GetMouseButtonUp(0);
             var drag = Input.GetMouseButton(0);
@@ -36,6 +41,11 @@ namespace NotDecided.InputManager
             if(down)
             {
                 OnMouseDown();
+            }
+
+            if(drag)
+            {
+                OnMouseDrag();
             }
 
             if(up)
@@ -55,12 +65,24 @@ namespace NotDecided.InputManager
             
             pointerWasOnUI = false;
             RaycastHit hit;
-            RaycastFromCamera(pos,out hit);
+            RaycastFromCamera(pos, out hit);
 
             if (hit.collider != null)
             {
                 transformAlreadyPointerDowned = hit.transform;
                 hit.transform.GetComponent<IPointerDownHandler>()?.OnPointerDown(hit.point);
+            }
+        }
+
+        private void OnMouseDrag()
+        {
+            Vector2 pos = Input.mousePosition;
+            RaycastHit hit;
+            RaycastFromCamera(pos, out hit);
+
+            if (transformAlreadyPointerDowned != null)
+            {
+                transformAlreadyPointerDowned.GetComponent<IPointerDragHandler>()?.OnPointerDrag(hit.point);
             }
         }
 
@@ -94,6 +116,16 @@ namespace NotDecided.InputManager
                 currCamera.farClipPlane - currCamera.nearClipPlane,
                 layerMask
             );
+        }
+
+        public void EnableInput()
+        {
+            isInputDisabled = true;
+        }
+
+        public void DisableInput()
+        {
+            isInputDisabled = false;
         }
     }
 }
