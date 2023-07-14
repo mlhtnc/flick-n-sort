@@ -41,7 +41,11 @@ namespace NotDecided
             var direction = startPoint - endPoint;
             var magnitude = Mathf.Clamp(direction.magnitude, 0, targetPiece.MaxPullRange);
 
-            transform.rotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
+            if(direction.normalized != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
+            }
+
             transform.position = targetPiece.transform.position + direction.normalized * 0.7f;
 
             var localScale = transform.localScale;
