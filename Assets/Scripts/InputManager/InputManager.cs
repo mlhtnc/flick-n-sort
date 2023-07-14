@@ -76,6 +76,10 @@ namespace NotDecided.InputManagament
 
         private void OnMouseDrag()
         {
+            // If one of the pointers was on UI, do not run the rest of it
+            if(pointerWasOnUI)
+                return;
+            
             Vector2 pos = Input.mousePosition;
             RaycastHit hit;
             RaycastFromCamera(pos, out hit);

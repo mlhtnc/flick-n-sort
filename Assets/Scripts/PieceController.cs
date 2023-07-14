@@ -75,6 +75,9 @@ namespace NotDecided
 
         public void OnPointerDrag(Vector3 pos)
         {
+            if(isMoving)
+                return;
+            
             // Make sure they are in the same plane
             pos = new Vector3(pos.x, pointerDownPoint.y, pos.z);
 
@@ -83,6 +86,8 @@ namespace NotDecided
 
         public void OnPointerUp(Vector3 pos)
         {
+            PieceArrowController.Instance.Hide();
+            
             if(isMoving)
                 return;
             
@@ -93,8 +98,6 @@ namespace NotDecided
             var magnitude = Mathf.Clamp(direction.magnitude, 0, maxPullRange);
 
             rgBody.AddForce(direction.normalized * magnitude * 150, ForceMode.Force);
-
-            PieceArrowController.Instance.Hide();
         }
 
         private void OnCollisionEnter(Collision collision)
