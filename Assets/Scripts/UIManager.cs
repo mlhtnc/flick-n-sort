@@ -8,6 +8,9 @@ namespace NotDecided
         [SerializeField]
         private TextMeshProUGUI levelText;
 
+        [SerializeField]
+        private SlicedFilledImage levelProgressFiller;
+
         private LevelManager levelManager;
 
         private void Start()
@@ -17,7 +20,9 @@ namespace NotDecided
 
         private void Update()
         {
-            levelText.SetText(levelManager.Level.ToString());
+            levelText.SetText($"LEVEL {levelManager.Level.ToString()}");
+            // levelProgressFiller.fillAmount = 
+
         }
     }
 }

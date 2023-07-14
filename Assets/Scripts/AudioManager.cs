@@ -46,5 +46,15 @@ namespace NotDecided
             isCooldowned = false;
             timer = 0f;
         }
+
+        public void Mute()
+        {
+            audioSource.mute = true;
+        }
+
+        public void Unmute()
+        {
+            audioSource.mute = false;
+        }
     }
 }
