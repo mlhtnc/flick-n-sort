@@ -50,9 +50,11 @@ namespace NotDecided
                 if(isHapticOn)
                 {
                     iconIndex = 3;
+                    VibrationManager.Instance.DisableVibration();
                 }
                 else
                 {
+                    VibrationManager.Instance.EnableVibration();
                     iconIndex = 2;                    
                 }
 

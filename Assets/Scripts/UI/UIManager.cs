@@ -64,6 +64,8 @@ namespace NotDecided
 
             initialCameraPos = mainCamera.transform.position;
             mainCamera.transform.Translate(0f, 5f, 0f, Space.World);
+
+            LeanTween.scale(tapToStartButton.transform.GetChild(0).gameObject, Vector3.one * 1.2f, 0.5f).setLoopPingPong(-1);
         }
 
         private void Update()
@@ -121,7 +123,7 @@ namespace NotDecided
 
         private void OnTapToStartButtonClicked()
         {
-            LeanTween.move(mainCamera.gameObject, initialCameraPos, 0.3f).setEaseInBack();
+            LeanTween.move(mainCamera.gameObject, initialCameraPos, 0.4f).setEaseOutBack();
 
             tapToStartButton.gameObject.SetActive(false);
             levelManager.StartNextLevel();
