@@ -1,5 +1,4 @@
 using UnityEngine;
-using NotDecided.InputManagament;
 using System;
 
 namespace NotDecided
@@ -32,23 +31,27 @@ namespace NotDecided
         private void Start()
         {
             levelControllers = GetComponentsInChildren<LevelController>(true);
+            level = SaveManager.GetData("level");
 
             SetupLevels();
         }
 
         private void SetupLevels()
         {
-            levelControllers[0].gameObject.SetActive(true);
-
-            for(int i = 1; i < levelControllers.Length; ++i)
+            for(int i = 0; i < levelControllers.Length; ++i)
             {
                 levelControllers[i].gameObject.SetActive(false);
             }
+
+            int zeroIndexedLevel = level - 1;
+            levelControllers[zeroIndexedLevel].gameObject.SetActive(true);
         }
 
         public void NotifyOnLevelCompleted()
         {
             IsLevelCompleted = true;
+
+            SaveManager.SaveData("level", level + 1);
 
             OnLevelCompleted?.Invoke();
         }

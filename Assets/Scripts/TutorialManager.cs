@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace NotDecided
@@ -25,9 +23,17 @@ namespace NotDecided
 
         private void Start()
         {
-            handSprite.gameObject.SetActive(false);
+            var level = SaveManager.GetData("level");
+            if(level > 1)
+            {
+                isTutorialCompleted = true;
+            }
+            else
+            {
+                LevelManager.Instance.OnLevelStarted += OnLevelStarted;
+            }
 
-            LevelManager.Instance.OnLevelStarted += OnLevelStarted;
+            handSprite.gameObject.SetActive(false);
         }
 
         private void OnLevelStarted()
