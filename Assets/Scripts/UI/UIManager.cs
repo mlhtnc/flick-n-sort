@@ -37,9 +37,6 @@ namespace NotDecided
 
         private Vector3 initialCameraPos;
 
-        [SerializeField]
-        private float cameraAnimationDistance;
-
         private void Awake()
         {
             if(Instance != null)
@@ -96,7 +93,7 @@ namespace NotDecided
                         levelCompletedImage.color = c;
                     },
                     0f,
-                    0.7f,
+                    0.95f,
                     1.5f
                 )
                 .setDelay(2.5f);
@@ -117,7 +114,12 @@ namespace NotDecided
                 .setEaseInOutBack();
 
                 nextLevelButton.gameObject.SetActive(false);
-                LeanTween.delayedCall(4.5f, () => nextLevelButton.gameObject.SetActive(true));
+
+                LeanTween.delayedCall(4.5f, () =>
+                {
+                    nextLevelButton.gameObject.SetActive(true);
+                    PoolManager.Despawn(confettiGo);
+                });
             });
         }
 

@@ -44,7 +44,14 @@ namespace NotDecided
             }
 
             int zeroIndexedLevel = level - 1;
-            levelControllers[zeroIndexedLevel].gameObject.SetActive(true);
+            if(zeroIndexedLevel + 1 >= levelControllers.Length)
+            {
+                levelControllers[levelControllers.Length - 1].gameObject.SetActive(true);
+            }
+            else
+            {
+                levelControllers[zeroIndexedLevel].gameObject.SetActive(true);
+            }
         }
 
         public void NotifyOnLevelCompleted()
@@ -59,8 +66,12 @@ namespace NotDecided
         public void SetupNextLevel()
         {
             int zeroIndexedLevel = level - 1;
-            if(zeroIndexedLevel + 1 == levelControllers.Length)
+            if(zeroIndexedLevel + 1 >= levelControllers.Length)
+            {
+                levelControllers[levelControllers.Length - 1].ResetLevel();
+                ++level;
                 return;
+            }
 
             levelControllers[zeroIndexedLevel].gameObject.SetActive(false);
             levelControllers[zeroIndexedLevel + 1].gameObject.SetActive(true);

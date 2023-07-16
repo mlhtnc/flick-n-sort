@@ -20,13 +20,26 @@ namespace NotDecided
 
         private List<ColorType> allColors;
 
+        private List<Vector3> initialPiecePositions;
+
         private void Start()
         {
-            pieceControllers = GetComponentsInChildren<PieceController>(true);
+            pieceControllers            = GetComponentsInChildren<PieceController>(true);
             colorPercentageUIController = GetComponent<ColorPercentageUIController>();
-            levelManager = LevelManager.Instance;
+            levelManager                = LevelManager.Instance;
 
+            CacheInitialPositions();
             CalculateTotalCountByColor();
+        }
+
+        private void CacheInitialPositions()
+        {
+            initialPiecePositions = new List<Vector3>();
+
+            for(int i = 0; i < pieceControllers.Length; ++i)
+            {
+                initialPiecePositions.Add(pieceControllers[i].transform.position);
+            }
         }
 
         private void CalculateTotalCountByColor()
@@ -91,6 +104,16 @@ namespace NotDecided
                 isLevelCompleted = true;
                 levelManager.NotifyOnLevelCompleted();
             }
+        }
+
+        public void ResetLevel()
+        {
+            for(int i = 0; i < pieceControllers.Length; ++i)
+            {
+                pieceControllers[i].transform.position = initialPiecePositions[i];
+            }
+
+            isLevelCompleted = false;
         }
     }
 }
