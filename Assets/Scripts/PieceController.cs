@@ -68,7 +68,7 @@ namespace NotDecided
 
         public void OnPointerDown(Vector3 pos)
         {
-            pointerDownPoint = pos;
+            pointerDownPoint = transform.position;//pos;
         }
 
         public void OnPointerDrag(Vector3 pos)
@@ -95,7 +95,13 @@ namespace NotDecided
             var direction = pointerDownPoint - pointerUpPoint;
             var magnitude = Mathf.Clamp(direction.magnitude, 0, maxPullRange);
 
+            if(magnitude < 0.9f)
+                return;
+
             rgBody.AddForce(direction.normalized * magnitude * 250, ForceMode.Force);
+
+            TutorialManager.Instance.OnPieceMoved();
+            VibrationManager.Instance.VibratePop();
         }
 
         private void OnCollisionEnter(Collision collision)

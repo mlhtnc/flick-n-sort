@@ -9,6 +9,9 @@ namespace NotDecided
     {
         public static PieceArrowController Instance;
 
+        [SerializeField]
+        private SpriteRenderer pieceIndicator;
+
         private GameObject spriteGo;
 
         private bool isDisabled;
@@ -28,6 +31,7 @@ namespace NotDecided
             spriteGo = transform.GetChild(0).gameObject;
 
             spriteGo.SetActive(false);
+            pieceIndicator.gameObject.SetActive(false);
 
             LevelManager.Instance.OnLevelStarted += OnLevelStarted;
             LevelManager.Instance.OnLevelCompleted += OnLevelCompleted;
@@ -46,18 +50,21 @@ namespace NotDecided
                 transform.rotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
             }
 
-            transform.position = targetPiece.transform.position + direction.normalized * 0.7f;
+            transform.position = targetPiece.transform.position + direction.normalized * 0.7f - Vector3.up * 0.15f;;
+            pieceIndicator.transform.position = targetPiece.transform.position - Vector3.up * 0.15f;
 
             var localScale = transform.localScale;
             localScale.z = NormalizationHelper.MinMax(0f, targetPiece.MaxPullRange, 0.7f, 1.35f, magnitude);
             transform.localScale = localScale;
 
             spriteGo.SetActive(true);
+            pieceIndicator.gameObject.SetActive(true);
         }
 
         public void Hide()
         {
             spriteGo.SetActive(false);
+            pieceIndicator.gameObject.SetActive(false);
         }
 
         private void OnLevelStarted()
