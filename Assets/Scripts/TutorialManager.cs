@@ -32,7 +32,7 @@ namespace NotDecided
 
         private void OnLevelStarted()
         {
-            LeanTween.move(handSprite.gameObject, new Vector3(-10.84f, 5.73f, 6.11f), 1.25f).setRepeat(-1).setLoopClamp();
+            LeanTween.move(handSprite.gameObject, new Vector3(-10.84f, 5.73f, 6.11f), 1f).setRepeat(-1).setLoopClamp();
             handSprite.gameObject.SetActive(true);
         }
 
